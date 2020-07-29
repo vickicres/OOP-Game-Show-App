@@ -6,11 +6,11 @@
 let game;
 
 //create a new game when the start button is click
-document.getElementById('btn__reset').addEventListener('click', function() {
+document.querySelector('#btn__reset').addEventListener('click', () => {
     //use `game` variable to instantiate a new Game object.
-    game.startGame();
     game = new Game();
-    
+    game.startGame();
+
 });
 
 

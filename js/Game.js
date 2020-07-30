@@ -3,24 +3,24 @@
  * Game.js */
 
 
+
 class Game {
-    construct() {
+    constructor() {
         this.missed = 0;
         this.phrases = this.createPhrases();
         this.activePhrase = null;
 
     }
 
-
     /**
      * create phrase for use in game
      * @return{array} An array of phrases that could be use in the game
      */
-    
+
     createPhrases() {
         const randomPhrases = [
           new Phrase('You can do it'),
-          new Phrase('Work hard play harder'),
+          new Phrase('Work hard play hard'),
           new Phrase('Card game'),
           new Phrase('Harry Potter'),
           new Phrase('Loving it')
@@ -51,7 +51,7 @@ class Game {
 
         //randomly retrieves one of the phrases stored in the phrases array and returns it  
         return this.phrases[Math.floor(Math.random() * (this.phrases.length))];
-    
+
     }
 
 
@@ -67,23 +67,65 @@ class Game {
     //        
     //        
     //    }
-    //    
-    //    removeLife() {
-    //        
-    //    //this method removes a life from the scoreboard, by replacing one of the liveHeart.png images with a lostHeart.png image (found in the images folder) and increments the missed property. If the player has five missed guesses (i.e they're out of lives), then end the game by calling the gameOver() method.
-    //        
-    //    }
-    //    
-    //    checkForWin() {
-    //    //this method checks to see if the player has revealed all of the letters in the active phrase.
-    //        
-    //        
-    //    }
-    //    
-    //    gameOver() {
-    //        
-    //    //this method displays the original start screen overlay, and depending on the outcome of the game, updates the overlay h1 element with a friendly win or loss message, and replaces the overlay’s start CSS class with either the win or lose CSS class
-    //        
-    //        
-    //    }
-}
+
+    /**
+     * Increases the value of the missed property
+     * Removes a life from the scoreboard
+     * Checks if player has remaining lives and ends game if player is out
+     */
+    removeLife(){
+        const heart = document.getElementsByClassName('tries');
+        let lostHeart = heart.firstChild;
+        lostHeart.src = 'images/lostHeart.png';
+        heart.classList.remove('tries');
+        this.missed += 1;
+
+        if (this.missed === 5) {
+            this.gameOver(this.checkForWin());
+
+        }
+
+        /**
+         * Checks for winning move
+         * @return {boolean} True if game has been won, false if game wasn't won
+         */
+        checkForWin(){
+            //this method checks to see if the player has revealed all of the letters in the active phrase.
+            const checkletter = document.querySelectorAll('.letter');
+            for (let i = 0; i < checkLetter.length; i += 1) {
+                if (checkLetter[i].classList.contains('hide')) {
+                    return false;
+                }
+            }
+            return true;
+            
+        }
+            
+
+
+        /**
+         * Displays game over message
+         * @param {boolean} gameWon - Whether or not the user won the game
+         */
+
+        gameOver(gameWon){
+
+            //this method displays the original start screen overlay, and depending on the outcome of the game, updates the overlay h1 element with a friendly win or loss message, and replaces the overlay’s start CSS class with either the win or lose CSS class
+
+            const overlay = document.getElementById('overlay');
+            const gameOverMessage = document.getElementById('game-over-message');
+            overlay.classList.remove('start');
+
+            if (gameWon) {
+                overlay.style.display = '';
+                gameOverMessage.textContent = 'You got it! Good job.';
+                overlay.classList.add('win');
+            } else {
+                overlay.style.display = '';
+                gameOverMessage.textContent = 'Wrong letter! Try again.';
+                overlay.classList.add('lose');
+            }
+
+
+        }
+    }

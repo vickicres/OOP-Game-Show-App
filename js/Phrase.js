@@ -5,6 +5,7 @@
 class Phrase {
     constructor(phrase) {
         this.phrase = phrase.toLowerCase();
+
     }
 
     /****
@@ -24,37 +25,49 @@ class Phrase {
             if (letter !== ' ') {
                 listItem = document.createElement('li');
                 listItem.className = `hide letter ${letter}`;
+                listItem.textContent = letter;
             } else {
+                listItem = document.createElement('li');
                 listItem.className = 'space';
+                listItem.textContent = letter;
             }
             phraseUl.appendChild(listItem);
         });
     }
 
-     /**
+    /**
      * Checks if passed letter is in phrase
      * @param (string) letter - Letter to check
      */
 
     // check to see if the letter selected by the player matches a letter in the phrase
-        checkLetter(letter) {
-            return this.phrase.includes(letter);
-        
-        }
-     /**
+    checkLetter(letter) {
+        return this.phrase.includes(letter);
+    }
+
+
+    /**
      * Displays passed letter on screen after a match is found
      * @param (string) letter - Letter to display
      */
-    
-    //reveals the letter on the board that matches the selection
-        showMatchedLetter(letter) {
-            
-            const showLetter = document.getElementsByClassName('letter');
+
+
+    showMatchedLetter(letter) {
+
+        if (this.checkLetter(letter)) {
+            const showLetter = document.querySelectorAll('li');
+
+            //reveals the letter on the board that matches the selection
             for (let i = 0; i < showLetter.length; i += 1) {
-                showLetter[i].classList.add('show');
-                showLetter[i].classList.remove('hide');
+                if (showLetter[i].textContent === letter) {
+                    showLetter[i].className = `show letter ${letter}`;
+                }
             }
-        
+
         }
+//                else {
+//                    return false;
+//                }
+    }
 
 }

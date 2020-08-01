@@ -11,7 +11,6 @@ class Game {
 
     }
 
-
     /**
      * create phrase for use in game
      * @return{array} An array of phrases that could be use in the game
@@ -28,9 +27,11 @@ class Game {
 
         return randomPhrases;
     }
+
     /**
-    Begins game by selecting a random phrase and displaying it to user
-    **/
+     * Begins game by selecting a random phrase and displaying it to user
+     * 
+     **/
 
     startGame() {
         // hides the start screen overlay
@@ -47,22 +48,21 @@ class Game {
      * @return {object} phrase object chosen to be used
      **/
 
+    //randomly retrieves one of the phrases stored in the phrases array and returns it 
+
     getRandomPhrase() {
-
-        //randomly retrieves one of the phrases stored in the phrases array and returns it  
         return this.phrases[Math.floor(Math.random() * (this.phrases.length))];
-
     }
 
     /**
      * Handles onscreen keyboard button clicks
      * @param (HTMLButtonElement) button - The clicked button element
      */
+
     handleInteraction(button) {
 
-        //it checks to see if the button clicked by the player matches a letter in the phrase, and the directs the game based on a correct or incorrect guess.
         //disable the selected letter’s onscreen keyboard button
-        let letter = button.textContent;
+        const letter = button.innerHTML;
         button.disabled = true;
 
         //If the phrase includes the guessed letter, add the chosen CSS class to the selected letter's keyboard button, call the showMatchedLetter() method on the phrase, and then call the checkForWin() method. If the player has won the game, also call the gameOver() method
@@ -73,16 +73,15 @@ class Game {
             if (this.checkForWin()) {
                 this.gameOver(true);
             }
-        //If the phrase does not include the guessed letter, add the wrong CSS class to the selected letter's keyboard button call the removeLife() method
+
         } else {
+            //If the phrase does not include the guessed letter, add the wrong CSS class to the selected letter's keyboard button call the removeLife() method
             button.classList.add('wrong');
             this.removeLife();
+
         }
 
-
-
-//        console.log(button);
-
+        //        console.log(button);
     }
 
     /**
@@ -91,16 +90,16 @@ class Game {
      * Checks if player has remaining lives and ends game if player is out
      */
     removeLife() {
+        const hearts = document.querySelector('.tries');
+        const lives = hearts.firstChild;
 
-        const hearts = document.querySelectorAll('.tries');
-
-        hearts[0].firstChild.src = 'images/lostHeart.png';
-        //        hearts[0].classList.remove('tries');
+        lives.src = 'images/lostHeart.png';
+        hearts.classList.remove('tries');
 
         //depends on how many times the player missed will loose one live at the time until no more lives 
         this.missed += 1;
         // if the player miss 5 chance then game over
-        if (this.missed === 5) {
+        if (this.missed >= 5) {
             this.gameOver(false);
 
         }
@@ -115,13 +114,16 @@ class Game {
 
     checkForWin() {
         //this method checks to see if the player has revealed all of the letters in the active phrase.
-        const hideLetter = document.querySelectorAll('.hide');
-        if (hideLetter.length !== 0) {
-            return false;
-        } else {
-            // if all of the letters revealed in the active phrase then return true
-            return true;
+        const hideLetters = document.querySelectorAll('li');
+
+        for (let i = 0; i < hideLetters.length; i += 1) {
+            if (hideLetters[i].classList.contains('hide')) {
+                return false;
+            }
         }
+        // if all of the letters revealed in the active phrase then return true
+        return true;
+
     }
     /**
      * Displays game over message
@@ -129,19 +131,56 @@ class Game {
      */
     gameOver(gameWon) {
 
-        //this method displays the original start screen overlay, and depending on the outcome of the game, updates the overlay h1 element with a friendly win or loss message, and replaces the overlay’s start CSS class with either the win or lose CSS class
         const overlay = document.querySelector('#overlay');
         const gameOverMessage = document.querySelector('#game-over-message');
         overlay.classList.remove('start');
+        const resetButton = document.querySelector('#btn__reset');
 
         if (gameWon) {
             overlay.style.display = '';
             gameOverMessage.textContent = 'You got it! Good job.';
             overlay.className = 'win';
+            resetButton.textContent = 'Play More';
+            resetButton.style.color = '#000';
+            resetButton.style.backgroundColor = '#CF78C5';
         } else {
             overlay.style.display = '';
             gameOverMessage.textContent = 'Oops..! Try again.';
             overlay.className = 'lose';
+            resetButton.textContent = 'Play Again';
+            resetButton.style.backgroundColor = '#5FDCF5';
+        }
+
+    }
+
+    /**
+     * when the player lose the game to restart the game again 
+     * 
+     */
+
+    resetGame() {
+
+        //remove all the li elements
+        const removeLi = document.querySelectorAll('#phrase ul li');
+        for (let i = 0; i < removeLi.length; i += 1) {
+            removeLi[i].remove();
+        }
+
+        //enable all the keys and reset the classname
+        const keyButton = document.querySelectorAll('.key');
+
+        for (let i = 0; i < keyButton.length; i += 1) {
+            keyButton[i].className = 'key';
+            keyButton[i].disabled = false;
+        }
+
+        //reset all the heart images
+        this.missed = 0;
+        const resetHearts = document.querySelectorAll('#scoreboard ol li');
+
+        for (let i = 0; i < 5; i += 1) {
+            resetHearts[i].className = 'tries';
+            resetHearts[i].firstChild.src = 'images/liveHeart.png';
         }
 
     }

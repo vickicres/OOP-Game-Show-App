@@ -9,6 +9,7 @@ let game;
 document.querySelector('#btn__reset').addEventListener('click', () => {
     //use `game` variable to instantiate a new Game object.
     game = new Game();
+    game.resetGame();
     game.startGame();
 
 });
@@ -16,8 +17,25 @@ document.querySelector('#btn__reset').addEventListener('click', () => {
 
 //when letter on the keyboard was selected, call the handleInteraction() menthod on game object
 document.getElementById('qwerty').addEventListener('click', (e) => {
+
     if (e.target.classList.contains('key')) {
         game.handleInteraction(e.target);
+    }
+
+});
+
+//Add keyboard functionality (source came from stack overflow)
+document.addEventListener('keydown', (e) => {
+
+    const keyrows = document.querySelectorAll('.key');
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+
+    if (letters.includes(event.key)) {
+        for (let key of keyrows) {
+            if (key.innerText === event.key) {
+                key.click();
+            }
+        }
     }
 
 });

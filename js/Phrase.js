@@ -45,12 +45,10 @@ class Phrase {
         return this.phrase.includes(letter);
     }
 
-
     /**
      * Displays passed letter on screen after a match is found
      * @param (string) letter - Letter to display
      */
-
 
     showMatchedLetter(letter) {
 
@@ -65,9 +63,6 @@ class Phrase {
             }
 
         }
-//                else {
-//                    return false;
-//                }
     }
 
 }

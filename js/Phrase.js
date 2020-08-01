@@ -8,6 +8,17 @@ class Phrase {
 
     }
     
+//    showHit() {
+//        const phrase = document.getElementById('phrase');
+//        
+//        //create hit element
+//        const hit = document.createElement('p');
+//        phrase.appendChild(hit); 
+//        
+//        //when a new game start, hit will show base on the letters
+//       
+//    }
+
     /****
     
     Display phrase on game board

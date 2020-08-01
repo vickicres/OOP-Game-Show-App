@@ -99,7 +99,7 @@ class Game {
         //depends on how many times the player missed will loose one live at the time until no more lives 
         this.missed += 1;
         // if the player miss 5 chance then game over
-        if (this.missed >= 5) {
+        if (this.missed === 5) {
             this.gameOver(false);
 
         }

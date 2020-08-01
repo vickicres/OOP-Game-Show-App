@@ -23,7 +23,7 @@ document.getElementById('qwerty').addEventListener('click', (e) => {
 
 });
 
-//Add keyboard functionality
+//Add keyboard functionality (source came from stack overflow)
 document.addEventListener('keydown', (e) => {
 
     const keyrows = document.querySelectorAll('.key');

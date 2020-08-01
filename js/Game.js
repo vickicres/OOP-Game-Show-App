@@ -18,7 +18,7 @@ class Game {
 
     createPhrases() {
         const randomPhrases = [
-          new Phrase('You can do it'),
+          new Phrase('Just do it'),
           new Phrase('Work hard play hard'),
           new Phrase('Card game'),
           new Phrase('Harry Potter'),
@@ -51,7 +51,7 @@ class Game {
     //randomly retrieves one of the phrases stored in the phrases array and returns it 
 
     getRandomPhrase() {
-        return this.phrases[Math.floor(Math.random() * (this.phrases.length))];
+        return this.phrases[Math.floor(Math.random() * this.phrases.length)];
     }
 
     /**
@@ -133,8 +133,8 @@ class Game {
 
         const overlay = document.querySelector('#overlay');
         const gameOverMessage = document.querySelector('#game-over-message');
-        overlay.classList.remove('start');
         const resetButton = document.querySelector('#btn__reset');
+        overlay.classList.remove('start');
 
         if (gameWon) {
             overlay.style.display = '';

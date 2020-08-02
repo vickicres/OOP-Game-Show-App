@@ -90,12 +90,14 @@ class Game {
      * Checks if player has remaining lives and ends game if player is out
      */
     removeLife() {
-        const hearts = document.querySelector('.tries');
-        const lives = hearts.firstChild;
-
-        lives.src = 'images/lostHeart.png';
-        hearts.classList.remove('tries');
-
+        const hearts = document.querySelectorAll('#scoreboard img');
+        
+        for (let img of hearts){
+            if (img.src.includes("liveHeart.png")){
+                img.src = 'images/lostHeart.png';
+                break;
+            }
+        }
         //depends on how many times the player missed will loose one live at the time until no more lives 
         this.missed += 1;
         // if the player miss 5 chance then game over
@@ -103,7 +105,6 @@ class Game {
             this.gameOver(false);
 
         }
-
     }
 
     /**

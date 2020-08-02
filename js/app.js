@@ -24,17 +24,22 @@ document.getElementById('qwerty').addEventListener('click', (e) => {
 });
 
 //Add keyboard functionality (source came from stack overflow)
-document.addEventListener('keydown', (e) => {
-
+document.addEventListener('keyup', (e) => {
     const keyrows = document.querySelectorAll('.key');
-    const letters = 'abcdefghijklmnopqrstuvwxyz';
-
-    if (letters.includes(event.key)) {
-        for (let key of keyrows) {
-            if (key.innerText === event.key) {
-                key.click();
-            }
-        }
-    }
+//    const letters = event.key.toLowerCase();
+//    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+//
+//    if (alphabet.includes(letters)) {
+//        for (let key of keyrows) {
+//            if (key.innerText === event.key) {
+//                key.click();
+//            }
+//        }
+//    }
+    keyrows.forEach(key => {
+				if (event.key.toLowerCase() == key.innerHTML) {
+					key.click();
+				}
+			});
 
 });
